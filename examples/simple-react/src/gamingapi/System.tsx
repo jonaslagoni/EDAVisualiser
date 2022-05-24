@@ -1,29 +1,20 @@
 import { useState, useEffect } from 'react';
-import { Menu } from './Menu';
-import { useParams } from 'react-router-dom';
-import { ApplicationFocusView } from '@lagoni/edavisualiser';
+import { SystemView } from '@lagoni/edavisualiser';
 import { apps } from './apps';
 import '@asyncapi/parser/dist/bundle';
 
 import '@lagoni/edavisualiser/styles/default.css';
 
 function Asyncapi() {
-  const [externalApplications, setAsyncapiDocuments] = useState<Array<{ parsedDoc: any, name: string }>>([]);
-  const [focusedApplication, setFocusedApplication] = useState<{ parsedDoc: any, name: string }>();
-  let { application } = useParams<{ application: string }>();
+  const [asyncapiDocuments, setAsyncapiDocuments] = useState<Array<{ parsedDoc: any, name: string }>>([]);
 
   useEffect(() => {
+    const parser = (window as any)['AsyncAPIParser'];
     const fetchData = async () => {
       const data = [];
-      const parser = (window as any)['AsyncAPIParser'];
-      for (const [name, asyncapi] of Object.entries(apps)) {
-        if (application === name) {
-          const parsedDoc = await parser.parse(asyncapi);
-          setFocusedApplication({ parsedDoc, name });
-        } else {
-          const parsedDoc = await parser.parse(asyncapi);
-          data.push({ parsedDoc, name });
-        }
+      for (const [name, asyncapiUrl] of Object.entries(apps)) {
+        const parsedDoc = await parser.parseFromUrl(asyncapiUrl);
+        data.push({ parsedDoc, name });
       }
       setAsyncapiDocuments(data);
     };
@@ -32,12 +23,10 @@ function Asyncapi() {
   }, []);
 
   let node;
-  if (externalApplications.length > 0 && focusedApplication !== undefined) {
+  if (asyncapiDocuments.length > 0) {
     node = (
-      <ApplicationFocusView
-        sideMenu={() => Menu}
-        asyncapi={{ document: focusedApplication.parsedDoc }}
-        external={externalApplications.map(({ parsedDoc, name }) => {
+      <SystemView 
+        applications={asyncapiDocuments.map(({ parsedDoc, name }) => {
           return {
             asyncapi: {
               document: parsedDoc,
@@ -58,7 +47,7 @@ function Asyncapi() {
                   </a>
                 </div>
               )
-            }
+            },
           }
         })}
       />

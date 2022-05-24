@@ -1,13 +1,14 @@
 import Head from 'next/head';
-// Import component using `dynamic` helper
-import dynamic from 'next/dynamic';
+import { ApplicationView, Application } from '@lagoni/edavisualiser';
+import { useState } from 'react';
 
 // Import component without SSR/SSG
 const ApplicationView = dynamic(() => import('@lagoni/edavisualiser/browser/ApplicationView'), { ssr: false });
 const Application = dynamic(() => import('@lagoni/edavisualiser/browser/Application'), { ssr: false });
  
 export default function Home() {
-  if (typeof navigator === 'undefined') return null;
+  const [t, setT] = useState(false);
+
   return (
     <div className="container">
       <Head>
@@ -19,7 +20,7 @@ export default function Home() {
         <h1 className="title">
           Welcome to <a href="https://nextjs.org">Next.js!</a>
         </h1>
-        <ApplicationView>
+        {/* <ApplicationView>
           <Application
             id="string"
             defaultContentType="string"
@@ -41,7 +42,7 @@ export default function Home() {
               },
             ]}
           ></Application>
-        </ApplicationView>
+        </ApplicationView> */}
       </main>
 
       <footer>
