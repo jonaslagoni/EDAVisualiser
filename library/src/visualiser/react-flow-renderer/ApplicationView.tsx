@@ -27,7 +27,7 @@ export const ApplicationView: React.FunctionComponent<ApplicationViewProps> = ({
   },
   sideMenu = () => {
     return (
-      <div className="mt-28 ml-4 px-2 text-lg absolute text-gray-800 top-0 left-0 bg-white space-x-2 py-2 border border-gray-100 inline-block">
+      <div className="m-4 px-2 text-lg absolute text-gray-800 top-0 left-0 bg-white space-x-2 py-2 border border-gray-100 inline-block">
         <span className="font-bold">Event Visualiser</span>
         <span className="text-gray-200">|</span>
         <span className="font-light capitalize">Test</span>

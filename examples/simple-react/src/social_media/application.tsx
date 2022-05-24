@@ -29,7 +29,7 @@ function Asyncapi() {
     };
 
     fetchData().catch(console.error);
-  }, []);
+  }, [application]);
 
   let node;
   if (externalApplications.length > 0 && focusedApplication !== undefined) {

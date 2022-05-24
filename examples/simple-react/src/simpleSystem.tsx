@@ -1,11 +1,4 @@
-import {
-  Application,
-  Outgoing,
-  Incoming,
-  SystemView,
-} from '@lagoni/edavisualiser';
-import '@lagoni/edavisualiser/styles/default.css';
-import './simple.css';
+import { SystemView } from '@lagoni/edavisualiser';
 
 function App() {
   return (
